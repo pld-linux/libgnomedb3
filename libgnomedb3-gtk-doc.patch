@@ -1,0 +1,11 @@
+--- libgnomedb-3.0.0/doc/libgnomedb-3.0-C.omf.in.orig	2007-02-09 17:19:33.000000000 +0100
++++ libgnomedb-3.0.0/doc/libgnomedb-3.0-C.omf.in	2007-06-02 12:51:20.519215576 +0200
+@@ -15,7 +15,7 @@
+     </description>
+     <type>user's guide</type>
+     <format mime="text/html"/>
+-    <identifier url="file:/@prefix@/share/gtk-doc/html/libgnomedb-3.0/index.html"/>
++    <identifier url="file:/@HTML_DIR@/libgnomedb-3.0/index.html"/>
+     <language code="C"/>
+     <relation seriesid="0c3a2de2-d4ca-11d6-8994-cd3caececda4"/>
+     <rights type="GNU FDL" license.version="1.1"/>
