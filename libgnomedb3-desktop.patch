@@ -1,0 +1,15 @@
+--- libgnomedb-3.0.0/control-center/database-properties-3.0.desktop.in.orig	2007-02-09 17:19:33.000000000 +0100
++++ libgnomedb-3.0.0/control-center/database-properties-3.0.desktop.in	2007-06-02 10:32:38.092188133 +0200
+@@ -1,9 +1,10 @@
+ [Desktop Entry]
++Encoding=UTF-8
+ _Name=Database Access Properties
+ _Comment=Configure your database environment
+ Icon=gnome-db
+ Exec=gnome-database-properties-3.0
+-Terminal=0
++Terminal=false
+ Type=Application
+-Categories=Application;Settings;AdvancedSettings;
++Categories=GTK;GNOME;Settings;AdvancedSettings;X-Capplet;
+ StartupNotify=true
