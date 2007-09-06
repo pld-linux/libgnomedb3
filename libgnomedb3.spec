@@ -2,12 +2,12 @@
 Summary:	GNOME-DB widget library
 Summary(pl.UTF-8):	Biblioteka widgetów GNOME-DB
 Name:		libgnomedb3
-Version:	3.0.0
-Release:	1
+Version:	3.1.1
+Release:	0.1
 License:	LGPL v2+
 Group:		X11/Libraries
-Source0:	http://ftp.gnome.org/pub/gnome/sources/libgnomedb/3.0/libgnomedb-%{version}.tar.bz2
-# Source0-md5:	2a41abd14b123f0c9d4f540b9c07bedd
+Source0:	http://ftp.gnome.org/pub/gnome/sources/libgnomedb/3.1/libgnomedb-%{version}.tar.bz2
+# Source0-md5:	340ff66dfe0ebea730807e09c83963f2
 Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-gtk-doc.patch
 URL:		http://www.gnome-db.org/
@@ -22,7 +22,7 @@ BuildRequires:	gtk+2-devel >= 2:2.10.0
 BuildRequires:	gtk-doc >= 1.0
 BuildRequires:	gtksourceview-devel >= 1.0
 BuildRequires:	intltool
-BuildRequires:	libgda3-devel >= 3.0.0
+BuildRequires:	libgda3-devel >= 3.1.1
 BuildRequires:	libglade2-devel >= 1:2.6.0
 BuildRequires:	libgladeui-devel >= 3.1
 BuildRequires:	libgnomecanvas-devel >= 2.0
@@ -50,7 +50,7 @@ Requires:	%{name} = %{version}-%{release}
 Requires:	GConf2-devel >= 2.0
 Requires:	gtk+2-devel >= 2:2.10.0
 Requires:	gtksourceview-devel >= 1.0
-Requires:	libgda3-devel >= 3.0.0
+Requires:	libgda3-devel >= 3.1.1
 Requires:	libglade2-devel >= 1:2.6.0
 # for libgnomedb_graph only
 Requires:	libgnomecanvas-devel >= 2.0
@@ -125,10 +125,10 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT
 
 # no static modules and *.la for glade and libgnomedb modules
-rm -f $RPM_BUILD_ROOT%{_libdir}/{glade3/modules,libglade/2.0,libgnomedb/plugins/}/*.{la,a}
+rm -f $RPM_BUILD_ROOT%{_libdir}/{glade3/modules,libglade/2.0,gnome-db-3.0/plugins/}/*.{la,a}
 
 # move to examplesdir?
-rm -rf $RPM_BUILD_ROOT%{_datadir}/gnome-db/demo
+rm -rf $RPM_BUILD_ROOT%{_datadir}/gnome-db-3.0/demo
 
 %find_lang libgnomedb-3.0
 
@@ -156,17 +156,17 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libgnomedb-3.0.so.*.*.*
 %attr(755,root,root) %{_libdir}/libgnomedb_extra-3.0.so.*.*.*
 %attr(755,root,root) %{_libdir}/libgnomedb_graph-3.0.so.*.*.*
-%dir %{_libdir}/libgnomedb
-%dir %{_libdir}/libgnomedb/plugins
-%attr(755,root,root) %{_libdir}/libgnomedb/plugins/libgnomedb_entry_builtin_plugins.so
+%dir %{_libdir}/gnome-db-3.0
+%dir %{_libdir}/gnome-db-3.0/plugins
+%attr(755,root,root) %{_libdir}/gnome-db-3.0/plugins/libgnomedb_entry_builtin_plugins.so
 # libglade2 module (include it here as lib requires libglade2 anyway)
 %attr(755,root,root) %{_libdir}/libglade/2.0/libgnomedb-3.0.so
 # for libgnomedb
-%dir %{_datadir}/gnome-db
-%{_datadir}/gnome-db/server_operation.glade
-%{_datadir}/gnome-db/gnome-db-entry-*.xml
-%{_datadir}/gnome-db/import_encodings.xml
-%{_pixmapsdir}/libgnomedb-3.0
+%dir %{_datadir}/gnome-db-3.0
+%{_datadir}/gnome-db-3.0/server_operation.glade
+%{_datadir}/gnome-db-3.0/gnome-db-entry-*.xml
+%{_datadir}/gnome-db-3.0/import_encodings.xml
+%{_pixmapsdir}/gnome-db-3.0
 # for libgnomedb_extra
 %{_sysconfdir}/gconf/schemas/libgnomedb-3.0.schemas
 
@@ -175,7 +175,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/glade3/modules/libgladegnomedb.so
 %{_datadir}/glade3/catalogs/gnomedb.xml
 %{_datadir}/glade3/catalogs/gnomedb.xml.in
-%{_datadir}/glade3/pixmaps/*/gnome_db_*.png
+%{_datadir}/glade3/pixmaps/*/*/*/*.png
 
 %files devel
 %defattr(644,root,root,755)
@@ -207,4 +207,4 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/gnome-db-browser
 %attr(755,root,root) %{_bindir}/gnome-db-demo
 %{_desktopdir}/database-properties-3.0.desktop
-%{_pixmapsdir}/gnome-db.png
+%{_pixmapsdir}/libgnomedb-3.0/gnome-db.png
