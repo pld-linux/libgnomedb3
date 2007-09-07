@@ -155,6 +155,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS ChangeLog NEWS
 %attr(755,root,root) %{_libdir}/libgnomedb-3.0.so.*.*.*
 %attr(755,root,root) %{_libdir}/libgnomedb_extra-3.0.so.*.*.*
+%attr(755,root,root) %{_libdir}/libgnomedb_goo-3.0.so.*.*.*
 %attr(755,root,root) %{_libdir}/libgnomedb_graph-3.0.so.*.*.*
 %dir %{_libdir}/gnome-db-3.0
 %dir %{_libdir}/gnome-db-3.0/plugins
@@ -181,19 +182,23 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libgnomedb-3.0.so
 %attr(755,root,root) %{_libdir}/libgnomedb_extra-3.0.so
+%attr(755,root,root) %{_libdir}/libgnomedb_goo-3.0.so
 %attr(755,root,root) %{_libdir}/libgnomedb_graph-3.0.so
 %{_libdir}/libgnomedb-3.0.la
 %{_libdir}/libgnomedb_extra-3.0.la
+%{_libdir}/libgnomedb_goo-3.0.la
 %{_libdir}/libgnomedb_graph-3.0.la
 %{_includedir}/libgnomedb-3.0
 %{_pkgconfigdir}/libgnomedb-3.0.pc
 %{_pkgconfigdir}/libgnomedb-extra-3.0.pc
+%{_pkgconfigdir}/libgnomedb-goo-3.0.pc
 %{_pkgconfigdir}/libgnomedb-graph-3.0.pc
 
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libgnomedb-3.0.a
 %{_libdir}/libgnomedb_extra-3.0.a
+%{_libdir}/libgnomedb_goo-3.0.a
 %{_libdir}/libgnomedb_graph-3.0.a
 
 %files apidocs
