@@ -18,6 +18,7 @@ BuildRequires:	automake >= 1:1.8
 #BuildRequires:	evolution-data-server-devel >= 1.2
 BuildRequires:	gettext-devel
 BuildRequires:	gnome-common >= 2.12.0
+BuildRequires:	goocanvas-devel >= 0.9
 BuildRequires:	gtk+2-devel >= 2:2.10.0
 BuildRequires:	gtk-doc >= 1.0
 BuildRequires:	gtksourceview-devel >= 1.0
