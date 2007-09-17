@@ -25,7 +25,7 @@ BuildRequires:	gtksourceview-devel >= 1.0
 BuildRequires:	intltool
 BuildRequires:	libgda3-devel >= 3.1.1
 BuildRequires:	libglade2-devel >= 1:2.6.0
-BuildRequires:	libgladeui-devel >= 3.3.4
+BuildRequires:	libgladeui-devel >= 3.4.0
 BuildRequires:	libgnomecanvas-devel >= 2.0
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
