@@ -3,7 +3,7 @@ Summary:	GNOME-DB widget library
 Summary(pl.UTF-8):	Biblioteka widgetów GNOME-DB
 Name:		libgnomedb3
 Version:	3.1.1
-Release:	0.2
+Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/gnome/sources/libgnomedb/3.1/libgnomedb-%{version}.tar.bz2
