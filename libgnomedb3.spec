@@ -1,9 +1,8 @@
-# TODO: separate glade3 module
 Summary:	GNOME-DB widget library
 Summary(pl.UTF-8):	Biblioteka widgetów GNOME-DB
 Name:		libgnomedb3
 Version:	3.1.1
-Release:	1
+Release:	2
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/gnome/sources/libgnomedb/3.1/libgnomedb-%{version}.tar.bz2
@@ -101,6 +100,19 @@ Allows to configure database access properties in GNOME.
 %description -n gnome-database-access-properties3 -l pl.UTF-8
 Pozwala na konfigurację dostępu do baz danych w GNOME.
 
+%package -n glade3-libgnomedb3
+Summary:	libgnomedb3 support for glade3
+Summary(pl.UTF-8):	Wsparcie dla libgnomedb3 w glade3.
+Group:		Development/Building
+Requires:	%{name} = %{version}-%{release}
+Requires:	glade3
+
+%description -n glade3-libgnomedb3
+libgnomedb3 support for glade3.
+
+%description -n glade3-libgnomedb3 -l pl.UTF-8
+Wsparcie dla libgnomedb3 w glade3.
+
 %prep
 %setup -q -n libgnomedb-%{version}
 %patch0 -p1
@@ -172,8 +184,8 @@ rm -rf $RPM_BUILD_ROOT
 # for libgnomedb_extra
 %{_sysconfdir}/gconf/schemas/libgnomedb-3.0.schemas
 
-# TODO: separate package (glade3-libgnomedb3 or libgladeui-libgnomedb3?)
-# glade3 module (for glade3 IDE or any app through libgladeui?)
+%files -n glade3-libgnomedb3
+%defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/glade3/modules/libgladegnomedb.so
 %{_datadir}/glade3/catalogs/gnomedb.xml
 %{_datadir}/glade3/catalogs/gnomedb.xml.in
