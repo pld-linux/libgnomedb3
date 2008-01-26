@@ -5,7 +5,7 @@ Version:	3.1.2
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
-Source0:	http://ftp.gnome.org/pub/gnome/sources/libgnomedb/3.1/libgnomedb-%{version}.tar.bz2
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/libgnomedb/3.1/libgnomedb-%{version}.tar.bz2
 # Source0-md5:	9896bd66451c3f1e2bdd1cd79d524348
 Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-gtk-doc.patch
@@ -101,17 +101,17 @@ Allows to configure database access properties in GNOME.
 Pozwala na konfigurację dostępu do baz danych w GNOME.
 
 %package -n glade3-libgnomedb3
-Summary:	libgnomedb3 support for glade3
-Summary(pl.UTF-8):	Wsparcie dla libgnomedb3 w glade3.
+Summary:	libgnomedb3 support for Glade 3
+Summary(pl.UTF-8):	Wsparcie dla libgnomedb3 w Glade 3
 Group:		Development/Building
 Requires:	%{name} = %{version}-%{release}
 Requires:	glade3
 
 %description -n glade3-libgnomedb3
-libgnomedb3 support for glade3.
+libgnomedb3 support for Glade 3.
 
 %description -n glade3-libgnomedb3 -l pl.UTF-8
-Wsparcie dla libgnomedb3 w glade3.
+Wsparcie dla libgnomedb3 w Glade 3.
 
 %prep
 %setup -q -n libgnomedb-%{version}
@@ -184,13 +184,6 @@ rm -rf $RPM_BUILD_ROOT
 # for libgnomedb_extra
 %{_sysconfdir}/gconf/schemas/libgnomedb-3.0.schemas
 
-%files -n glade3-libgnomedb3
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/glade3/modules/libgladegnomedb.so
-%{_datadir}/glade3/catalogs/gnomedb.xml
-%{_datadir}/glade3/catalogs/gnomedb.xml.in
-%{_datadir}/glade3/pixmaps/*/*/*/*.png
-
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libgnomedb-3.0.so
@@ -227,3 +220,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_desktopdir}/database-properties-3.0.desktop
 %{_pixmapsdir}/libgnomedb-3.0
 %{_pixmapsdir}/libgnomedb-3.0/gnome-db.png
+
+%files -n glade3-libgnomedb3
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/glade3/modules/libgladegnomedb.so
+%{_datadir}/glade3/catalogs/gnomedb.xml
+%{_datadir}/glade3/catalogs/gnomedb.xml.in
+%{_datadir}/glade3/pixmaps/*/*/*/*.png
