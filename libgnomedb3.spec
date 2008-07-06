@@ -170,6 +170,10 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libgnomedb_extra-3.0.so.*.*.*
 %attr(755,root,root) %{_libdir}/libgnomedb_goo-3.0.so.*.*.*
 %attr(755,root,root) %{_libdir}/libgnomedb_graph-3.0.so.*.*.*
+%ghost %{_libdir}/libgnomedb-3.0.so.4
+%ghost %{_libdir}/libgnomedb_extra-3.0.so.4
+%ghost %{_libdir}/libgnomedb_goo-3.0.so.4
+%ghost %{_libdir}/libgnomedb_graph-3.0.so.4
 %dir %{_libdir}/gnome-db-3.0
 %dir %{_libdir}/gnome-db-3.0/plugins
 %attr(755,root,root) %{_libdir}/gnome-db-3.0/plugins/libgnomedb_entry_builtin_plugins.so
