@@ -2,13 +2,14 @@ Summary:	GNOME-DB widget library
 Summary(pl.UTF-8):	Biblioteka widgetów GNOME-DB
 Name:		libgnomedb3
 Version:	3.1.2
-Release:	7
+Release:	8
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/libgnomedb/3.1/libgnomedb-%{version}.tar.bz2
 # Source0-md5:	9896bd66451c3f1e2bdd1cd79d524348
 Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-gtk-doc.patch
+Patch2:		%{name}-build_fix.patch
 URL:		http://www.gnome-db.org/
 BuildRequires:	GConf2-devel >= 2.0
 BuildRequires:	autoconf >= 2.59
@@ -117,6 +118,7 @@ Wsparcie dla libgnomedb3 w Glade 3.
 %setup -q -n libgnomedb-%{version}
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 %{__intltoolize}
