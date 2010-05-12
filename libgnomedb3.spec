@@ -14,6 +14,7 @@ URL:		http://www.gnome-db.org/
 BuildRequires:	GConf2-devel >= 2.0
 BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake >= 1:1.8
+BuildRequires:	docbook-dtd412-xml
 # only checked for, not used
 #BuildRequires:	evolution-data-server-devel >= 1.2
 BuildRequires:	gettext-devel
@@ -29,6 +30,7 @@ BuildRequires:	libgladeui-devel >= 3.4.0
 BuildRequires:	libgnomecanvas-devel >= 2.0
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
+BuildRequires:	readline-devel
 BuildRequires:	rpmbuild(macros) >= 1.197
 BuildRequires:	scrollkeeper
 # hildon-libs (only checked, not used)
