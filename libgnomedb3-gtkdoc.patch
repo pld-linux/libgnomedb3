@@ -1,0 +1,30 @@
+--- libgnomedb-3.1.2/gtk-doc.make.orig	2019-07-03 20:33:47.036011556 +0200
++++ libgnomedb-3.1.2/gtk-doc.make	2019-07-03 20:34:02.115929861 +0200
+@@ -69,7 +69,6 @@
+ tmpl-build.stamp: $(DOC_MODULE)-decl.txt $(SCANOBJ_FILES) $(DOC_MODULE)-sections.txt $(DOC_MODULE)-overrides.txt
+ 	@echo '*** Rebuilding template files ***'
+ 	@-chmod -R u+w $(srcdir)
+-	cd $(srcdir) && gtkdoc-mktmpl --module=$(DOC_MODULE)
+ 	touch tmpl-build.stamp
+ 
+ tmpl.stamp: tmpl-build.stamp
+@@ -97,7 +96,7 @@
+ 	cd $(srcdir)/html && gtkdoc-mkhtml $(DOC_MODULE) ../$(DOC_MAIN_SGML_FILE)
+ 	test "x$(HTML_IMAGES)" = "x" || ( cd $(srcdir) && cp $(HTML_IMAGES) html )
+ 	@echo '-- Fixing Crossreferences' 
+-	cd $(srcdir) && gtkdoc-fixxref --module-dir=html --html-dir=$(HTML_DIR) $(FIXXREF_OPTIONS)
++	cd $(srcdir) && gtkdoc-fixxref --module $(DOC_MODULE) --module-dir=html --html-dir=$(HTML_DIR) $(FIXXREF_OPTIONS)
+ 	touch html-build.stamp
+ else
+ all-local:
+--- libgnomedb-3.1.2/libgnomedb/gnome-db-util.c.orig	2019-07-03 19:39:26.150343955 +0200
++++ libgnomedb-3.1.2/libgnomedb/gnome-db-util.c	2019-07-03 20:11:15.293334574 +0200
+@@ -3,7 +3,7 @@
+  *
+  * AUTHORS:
+  *      Rodrigo Moya <rodrigo@gnome-db.org>
+- *      Carlos Perelló Marín <carlos@gnome-db.org>
++ *      Carlos Perello Marin <carlos@gnome-db.org>
+  *      Vivien Malerba <malerba@gnome-db.org>
+  *
+  * This Library is free software; you can redistribute it and/or

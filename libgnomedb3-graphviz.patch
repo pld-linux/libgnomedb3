@@ -1,0 +1,123 @@
+--- libgnomedb-3.1.2/libgnomedb-graph/gnome-db-canvas.c.orig	2007-09-01 14:28:14.000000000 +0200
++++ libgnomedb-3.1.2/libgnomedb-graph/gnome-db-canvas.c	2019-07-03 18:09:53.009452757 +0200
+@@ -26,6 +26,7 @@
+ #include "gnome-db-canvas-cursor.h"
+ #include <libgda/libgda.h>
+ #ifdef HAVE_GRAPHVIZ
++#include <math.h>
+ #include <stddef.h>
+ #include <gvc.h>
+ static GVC_t* gvc = NULL;
+@@ -774,13 +775,13 @@
+ 	if (!gvc)
+ 		gvc = gvContext ();
+ 
+-	graph = agopen ("GnomedbCanvasLayout", AGDIGRAPHSTRICT);
+-        agnodeattr (graph, "shape", "box");
+-        agnodeattr (graph, "height", ".1");
+-        agnodeattr (graph, "width", ".1");
+-        agnodeattr (graph, "fixedsize", "true");
+-        agnodeattr (graph, "pack", "true");
+-	agnodeattr (graph, "packmode", "node");
++	graph = agopen ("GnomedbCanvasLayout", Agstrictdirected, &AgDefaultDisc);
++        agset (graph, "shape", "box");
++        agset (graph, "height", ".1");
++        agset (graph, "width", ".1");
++        agset (graph, "fixedsize", "true");
++        agset (graph, "pack", "true");
++	agset (graph, "packmode", "node");
+ 
+ 	/* Graph nodes creation */
+ 	nodes_hash = g_hash_table_new (NULL, NULL);
+@@ -800,7 +801,7 @@
+ 			nodes_list = g_slist_prepend (nodes_list, nl);
+ 			
+ 			tmp = g_strdup_printf ("%p", item);
+-			node = agnode (graph, tmp);
++			node = agnode (graph, tmp, 0);
+ 			nl->node = node;
+ 			g_hash_table_insert (nodes_hash, item, node);
+ 			
+@@ -834,7 +835,7 @@
+ 			to_node = (Agnode_t*) g_hash_table_lookup (nodes_hash, to);
+ 			g_assert (from_node);
+ 			g_assert (to_node);
+-			agedge (graph, from_node, to_node);
++			agedge (graph, from_node, to_node, "", 0);
+ 		}
+ 	}
+ 
+@@ -853,11 +854,11 @@
+ 
+ 	for (list = nodes_list; list; list = list->next) {
+ 		NodeLayout *nl = (NodeLayout*) list->data;
+-		nl->end_x = ND_coord_i (nl->node).x - (nl->width / 2.);
+-		nl->end_y = - ND_coord_i (nl->node).y - (nl->height / 2.);
++		nl->end_x = ND_coord (nl->node).x - (nl->width / 2.);
++		nl->end_y = - ND_coord (nl->node).y - (nl->height / 2.);
+ 		/*g_print ("After: Node %p: HxW: %.3f %.3f XxY = %d, %d\n", nl->node, 
+ 			 ND_height (nl->node), ND_width (nl->node),
+-			 ND_coord_i (nl->node).x, - ND_coord_i (nl->node).y);*/
++			 ND_coord (nl->node).x, - ND_coord (nl->node).y);*/
+ 		if (!animate)
+ 			gda_graph_item_set_position (nl->graph_item, nl->end_x, nl->end_y);
+ 	}
+--- libgnomedb-3.1.2/libgnomedb-goo/gnome-db-goo.c.orig	2019-07-03 18:40:43.299428876 +0200
++++ libgnomedb-3.1.2/libgnomedb-goo/gnome-db-goo.c	2019-07-03 18:42:30.545514541 +0200
+@@ -853,13 +853,13 @@
+ 	if (!gvc)
+ 		gvc = gvContext ();
+ 
+-	graph = agopen ("GnomedbCanvasLayout", AGDIGRAPHSTRICT);
+-        agnodeattr (graph, "shape", "box");
+-        agnodeattr (graph, "height", ".1");
+-        agnodeattr (graph, "width", ".1");
+-        agnodeattr (graph, "fixedsize", "true");
+-        agnodeattr (graph, "pack", "true");
+-	agnodeattr (graph, "packmode", "node");
++	graph = agopen ("GnomedbCanvasLayout", Agstrictdirected, &AgDefaultDisc);
++        agset (graph, "shape", "box");
++        agset (graph, "height", ".1");
++        agset (graph, "width", ".1");
++        agset (graph, "fixedsize", "true");
++        agset (graph, "pack", "true");
++	agset (graph, "packmode", "node");
+ 
+ 	/* Graph nodes creation */
+ 	nodes_hash = g_hash_table_new (NULL, NULL);
+@@ -880,7 +880,7 @@
+ 			nodes_list = g_slist_prepend (nodes_list, nl);
+ 			
+ 			tmp = g_strdup_printf ("%p", item);
+-			node = agnode (graph, tmp);
++			node = agnode (graph, tmp, 0);
+ 			nl->node = node;
+ 			g_hash_table_insert (nodes_hash, item, node);
+ 			
+@@ -914,7 +914,7 @@
+ 			from_node = (Agnode_t*) g_hash_table_lookup (nodes_hash, from);
+ 			to_node = (Agnode_t*) g_hash_table_lookup (nodes_hash, to);
+ 			if (from_node && to_node)
+-				agedge (graph, from_node, to_node);
++				agedge (graph, from_node, to_node, "", 0);
+ 		}
+ 	}
+ 
+@@ -935,14 +935,14 @@
+ 
+ 	for (list = nodes_list; list; list = list->next) {
+ 		NodeLayout *nl = (NodeLayout*) list->data;
+-		nl->end_x = ND_coord_i (nl->node).x - (nl->width / 2.);
+-		nl->end_y = - ND_coord_i (nl->node).y - (nl->height / 2.);
++		nl->end_x = ND_coord (nl->node).x - (nl->width / 2.);
++		nl->end_y = - ND_coord (nl->node).y - (nl->height / 2.);
+ 		nl->dx = fabs (nl->end_x - nl->start_x);
+ 		nl->dy = fabs (nl->end_y - nl->start_y);
+ 		nl->stop = FALSE;
+ 		/*g_print ("After: Node %p: HxW: %.3f %.3f XxY = %d, %d\n", nl->node, 
+ 			 ND_height (nl->node), ND_width (nl->node),
+-			 ND_coord_i (nl->node).x, - ND_coord_i (nl->node).y);*/
++			 ND_coord (nl->node).x, - ND_coord (nl->node).y);*/
+ 		if (!animate)
+ 			gda_graph_item_set_position (nl->graph_item, nl->end_x, nl->end_y);
+ 	}

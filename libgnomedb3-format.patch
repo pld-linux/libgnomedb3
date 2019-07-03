@@ -1,0 +1,168 @@
+--- libgnomedb-3.1.2/libgnomedb/gnome-db-util.c.orig	2007-09-02 08:24:53.000000000 +0200
++++ libgnomedb-3.1.2/libgnomedb/gnome-db-util.c	2019-07-03 16:01:15.934593069 +0200
+@@ -698,7 +698,7 @@
+ 	dialog = gtk_message_dialog_new_with_markup (parent, 
+ 						     GTK_DIALOG_DESTROY_WITH_PARENT |
+ 						     GTK_DIALOG_MODAL, type,
+-						     GTK_BUTTONS_CLOSE, str);
++						     GTK_BUTTONS_CLOSE, "%s", str);
+ 	
+ 	return dialog;
+ }
+--- libgnomedb-3.1.2/libgnomedb/utility.c.orig	2007-10-21 14:30:17.000000000 +0200
++++ libgnomedb-3.1.2/libgnomedb/utility.c	2019-07-03 16:10:39.504873281 +0200
+@@ -422,7 +422,7 @@
+ 	dlg = gtk_message_dialog_new_with_markup ((GtkWindow *) gtk_widget_get_toplevel (GTK_WIDGET (form)), GTK_DIALOG_MODAL,
+ 						  GTK_MESSAGE_ERROR, 
+ 						  with_question ? GTK_BUTTONS_NONE : GTK_BUTTONS_CLOSE,
+-						  msg);
++						  "%s", msg);
+ 	g_free (msg);
+ 
+ 	if (filled_error && filled_error->message) {
+--- libgnomedb-3.1.2/libgnomedb/plugins/common-pict.c.orig	2007-10-11 14:26:50.000000000 +0200
++++ libgnomedb-3.1.2/libgnomedb/plugins/common-pict.c	2019-07-03 16:14:28.720298181 +0200
+@@ -262,7 +262,7 @@
+ 				notice_msg = g_strdup_printf (_("Error while interpreting data as an image:\n%s"),
+ 							      loc_error && loc_error->message ? loc_error->message : _("No detail"));
+ 				g_error_free (loc_error);
+-				g_set_error (error, 0, GPOINTER_TO_INT (GTK_STOCK_DIALOG_WARNING), notice_msg);
++				g_set_error (error, 0, GPOINTER_TO_INT (GTK_STOCK_DIALOG_WARNING), "%s", notice_msg);
+ 				g_free (notice_msg);
+ 			}
+ 			
+--- libgnomedb-3.1.2/libgnomedb-graph/gnome-db-canvas-join.c.orig	2007-09-01 14:28:14.000000000 +0200
++++ libgnomedb-3.1.2/libgnomedb-graph/gnome-db-canvas-join.c	2019-07-03 18:10:56.939106420 +0200
+@@ -654,7 +654,7 @@
+ 						"which could be used to propose a suitable join condition.\n\n"
+ 						"The database model may need to be updated"));
+ 		dlg = gtk_message_dialog_new_with_markup (NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_INFO,
+-							  GTK_BUTTONS_CLOSE, msg);
++							  GTK_BUTTONS_CLOSE, "%s", msg);
+ 		g_free (msg);
+ 		gtk_dialog_run (GTK_DIALOG (dlg));
+ 		gtk_widget_destroy (dlg);
+@@ -688,7 +688,7 @@
+ 						      _("Could not set the new join condition:"),
+ 						      error->message);
+ 			dlg = gtk_message_dialog_new_with_markup (NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR,
+-								  GTK_BUTTONS_CLOSE, msg);
++								  GTK_BUTTONS_CLOSE, "%s", msg);
+ 			g_free (msg);
+ 			gtk_dialog_run (GTK_DIALOG (dlg));
+ 			gtk_widget_destroy (dlg);
+--- libgnomedb-3.1.2/libgnomedb-graph/gnome-db-canvas-query-struct.c.orig	2007-09-01 14:28:14.000000000 +0200
++++ libgnomedb-3.1.2/libgnomedb-graph/gnome-db-canvas-query-struct.c	2019-07-03 18:21:35.772312230 +0200
+@@ -194,7 +194,7 @@
+ 						"create another target for that table or view before "
+ 						"creating the new join."));
+ 		dlg = gtk_message_dialog_new_with_markup (NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_INFO,
+-							  GTK_BUTTONS_CLOSE, msg);
++							  GTK_BUTTONS_CLOSE, "%s", msg);
+ 		g_free (msg);
+ 		gtk_dialog_run (GTK_DIALOG (dlg));
+ 		gtk_widget_destroy (dlg);
+--- libgnomedb-3.1.2/libgnomedb-goo/gnome-db-goo.c.orig	2007-09-01 14:29:00.000000000 +0200
++++ libgnomedb-3.1.2/libgnomedb-goo/gnome-db-goo.c	2019-07-03 18:40:43.299428876 +0200
+@@ -373,7 +373,7 @@
+ 
+ 				errdlg = gtk_message_dialog_new_with_markup ((GtkWindow*) toplevel,
+ 									     GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, 
+-									     GTK_BUTTONS_CLOSE, error);
++									     GTK_BUTTONS_CLOSE, "%s", error);
+ 				g_free (error);
+ 				gtk_dialog_run (GTK_DIALOG (errdlg));
+ 				gtk_widget_destroy (errdlg);
+--- libgnomedb-3.1.2/libgnomedb-goo/gnome-db-goo-join.c.orig	2007-09-01 14:29:00.000000000 +0200
++++ libgnomedb-3.1.2/libgnomedb-goo/gnome-db-goo-join.c	2019-07-03 18:46:35.017523456 +0200
+@@ -707,7 +707,7 @@
+ 						"which could be used to propose a suitable join condition.\n\n"
+ 						"The database model may need to be updated"));
+ 		dlg = gtk_message_dialog_new_with_markup (NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_INFO,
+-							  GTK_BUTTONS_CLOSE, msg);
++							  GTK_BUTTONS_CLOSE, "%s", msg);
+ 		g_free (msg);
+ 		gtk_dialog_run (GTK_DIALOG (dlg));
+ 		gtk_widget_destroy (dlg);
+@@ -741,7 +741,7 @@
+ 						      _("Could not set the new join condition:"),
+ 						      error->message);
+ 			dlg = gtk_message_dialog_new_with_markup (NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR,
+-								  GTK_BUTTONS_CLOSE, msg);
++								  GTK_BUTTONS_CLOSE, "%s", msg);
+ 			g_free (msg);
+ 			gtk_dialog_run (GTK_DIALOG (dlg));
+ 			gtk_widget_destroy (dlg);
+--- libgnomedb-3.1.2/libgnomedb-goo/gnome-db-goo-query-struct.c.orig	2007-09-01 14:29:00.000000000 +0200
++++ libgnomedb-3.1.2/libgnomedb-goo/gnome-db-goo-query-struct.c	2019-07-03 18:48:30.276899042 +0200
+@@ -192,7 +192,7 @@
+ 						"create another target for that table or view before "
+ 						"creating the new join."));
+ 		dlg = gtk_message_dialog_new_with_markup (NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_INFO,
+-							  GTK_BUTTONS_CLOSE, msg);
++							  GTK_BUTTONS_CLOSE, "%s", msg);
+ 		g_free (msg);
+ 		gtk_dialog_run (GTK_DIALOG (dlg));
+ 		gtk_widget_destroy (dlg);
+--- libgnomedb-3.1.2/control-center/dsn-properties-dialog.c.orig	2007-09-01 14:28:12.000000000 +0200
++++ libgnomedb-3.1.2/control-center/dsn-properties-dialog.c	2019-07-03 18:50:11.323018295 +0200
+@@ -199,7 +199,7 @@
+ 				if (cnc && GDA_IS_CONNECTION (cnc)) {
+ 					str = g_strdup_printf ("<b>%s</b>", _("Connection successfully opened!"));
+ 					msgdialog = gtk_message_dialog_new_with_markup (GTK_WINDOW (dialog), GTK_DIALOG_MODAL,
+-											GTK_MESSAGE_INFO, GTK_BUTTONS_OK, str);
++											GTK_MESSAGE_INFO, GTK_BUTTONS_OK, "%s", str);
+ 					g_free (str);
+ 					gda_connection_close (cnc);
+ 				}
+@@ -212,7 +212,7 @@
+ 					else
+ 						str = g_strdup_printf ("<b>%s</b>", _("Could not open connection"));
+ 					msgdialog = gtk_message_dialog_new_with_markup (GTK_WINDOW (dialog), GTK_DIALOG_MODAL,
+-											GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, str);
++											GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s", str);
+ 					g_free (str);
+ 				}
+ 				
+@@ -238,7 +238,7 @@
+ 				GtkWidget *msgdialog;
+ 				str = g_strdup_printf ("<b>%s</b>", _("Could not execute browser program (gnome-db-browser)."));
+ 				msgdialog = gtk_message_dialog_new_with_markup (GTK_WINDOW (dialog), GTK_DIALOG_MODAL,
+-										GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, str);
++										GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s", str);
+ 				g_free (str);
+ 				gtk_dialog_run (GTK_DIALOG (msgdialog));
+ 				gtk_widget_destroy (msgdialog);
+--- libgnomedb-3.1.2/testing/test-handlers.c.orig	2007-09-01 14:28:27.000000000 +0200
++++ libgnomedb-3.1.2/testing/test-handlers.c	2019-07-03 18:52:23.365636292 +0200
+@@ -441,7 +441,7 @@
+ 					       error && error->message ? error->message : "No detail");
+ 			label = gtk_label_new (str);
+ 			gtk_table_attach (GTK_TABLE (table), label, 1, 2, 2, 3, GTK_FILL, 0, 0, 0);
+-			g_warning (str);
++			g_warning ("%s", str);
+ 			g_error_free (error);
+ 		}
+ 		else {
+--- libgnomedb-3.1.2/extra/demos/ddl_queries.c.orig	2007-10-02 13:52:14.000000000 +0200
++++ libgnomedb-3.1.2/extra/demos/ddl_queries.c	2019-07-03 18:55:03.404769286 +0200
+@@ -467,7 +467,7 @@
+ 
+ 		dlg = gtk_message_dialog_new_with_markup (GTK_WINDOW (data->top_window),
+ 							  GTK_DIALOG_MODAL,
+-							  msg_type, GTK_BUTTONS_CLOSE, msg);
++							  msg_type, GTK_BUTTONS_CLOSE, "%s", msg);
+ 		g_free (sql);
+ 		g_free (msg);
+ 
+--- libgnomedb-3.1.2/extra/gnome-db-browser.c.orig	2007-09-01 14:28:59.000000000 +0200
++++ libgnomedb-3.1.2/extra/gnome-db-browser.c	2019-07-03 18:57:25.577332404 +0200
+@@ -281,7 +281,7 @@
+ 		msg = gtk_message_dialog_new_with_markup (GTK_WINDOW (config->mainwin), 
+ 							  GTK_DIALOG_DESTROY_WITH_PARENT,
+ 							  GTK_MESSAGE_QUESTION, GTK_BUTTONS_YES_NO, 
+-							  str);
++							  "%s", str);
+ 		g_free (str);
+ 		if (gtk_dialog_run (GTK_DIALOG (msg)) == GTK_RESPONSE_YES)
+ 			update_dbms_data_cb (NULL, config);

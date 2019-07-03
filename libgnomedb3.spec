@@ -10,7 +10,11 @@ Source0:	http://ftp.gnome.org/pub/GNOME/sources/libgnomedb/3.1/libgnomedb-%{vers
 Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-gtk-doc.patch
 Patch2:		%{name}-build_fix.patch
-URL:		http://www.gnome-db.org/
+Patch3:		%{name}-format.patch
+Patch4:		%{name}-graphviz.patch
+Patch5:		%{name}-perl.patch
+Patch6:		%{name}-gtkdoc.patch
+URL:		https://www.gnome-db.org/
 BuildRequires:	GConf2-devel >= 2.0
 BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake >= 1:1.8
@@ -18,12 +22,14 @@ BuildRequires:	docbook-dtd412-xml
 # only checked for, not used
 #BuildRequires:	evolution-data-server-devel >= 1.2
 BuildRequires:	gettext-tools
-BuildRequires:	gnome-common >= 2.12.0
+BuildRequires:	graphviz-devel
 BuildRequires:	goocanvas-devel >= 0.9
 BuildRequires:	gtk+2-devel >= 2:2.10.0
 BuildRequires:	gtk-doc >= 1.0
 BuildRequires:	gtksourceview-devel >= 1.0
 BuildRequires:	intltool
+BuildRequires:	iso-codes
+BuildRequires:	libgcrypt-devel >= 1.1.142
 BuildRequires:	libgda3-devel >= 3.1.2
 BuildRequires:	libglade2-devel >= 1:2.6.0
 BuildRequires:	libgladeui-devel >= 3.4.0
@@ -36,6 +42,7 @@ BuildRequires:	scrollkeeper
 # hildon-libs (only checked, not used)
 Requires(post):	/sbin/ldconfig
 Requires(post,preun):	GConf2 >= 2.0
+Requires:	iso-codes
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -51,11 +58,12 @@ Summary(pl.UTF-8):	Dla programistów widgetu GNOME-DB
 Group:		X11/Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	GConf2-devel >= 2.0
+Requires:	goocanvas-devel >= 0.9
+Requires:	graphviz-devel
 Requires:	gtk+2-devel >= 2:2.10.0
 Requires:	gtksourceview-devel >= 1.0
 Requires:	libgda3-devel >= 3.1.1
 Requires:	libglade2-devel >= 1:2.6.0
-# for libgnomedb_graph only
 Requires:	libgnomecanvas-devel >= 2.0
 
 %description devel
@@ -121,6 +129,10 @@ Wsparcie dla libgnomedb3 w Glade 3.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
 
 %build
 %{__intltoolize}
@@ -142,10 +154,14 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT
 
 # no static modules and *.la for glade and libgnomedb modules
-rm -f $RPM_BUILD_ROOT%{_libdir}/{glade3/modules,libglade/2.0,gnome-db-3.0/plugins/}/*.{la,a}
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/{glade3/modules,libglade/2.0,gnome-db-3.0/plugins}/*.{la,a}
+# obsoleted by pkg-config
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/libgnomedb*.la
 
 # move to examplesdir?
-rm -rf $RPM_BUILD_ROOT%{_datadir}/gnome-db-3.0/demo
+%{__rm} -r $RPM_BUILD_ROOT%{_datadir}/gnome-db-3.0/demo
+
+%{__mv} $RPM_BUILD_ROOT%{_localedir}/{sr@Latn,sr@latin}
 
 %find_lang libgnomedb-3.0
 
@@ -171,13 +187,13 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS
 %attr(755,root,root) %{_libdir}/libgnomedb-3.0.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgnomedb-3.0.so.4
 %attr(755,root,root) %{_libdir}/libgnomedb_extra-3.0.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgnomedb_extra-3.0.so.4
 %attr(755,root,root) %{_libdir}/libgnomedb_goo-3.0.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgnomedb_goo-3.0.so.4
 %attr(755,root,root) %{_libdir}/libgnomedb_graph-3.0.so.*.*.*
-%ghost %{_libdir}/libgnomedb-3.0.so.4
-%ghost %{_libdir}/libgnomedb_extra-3.0.so.4
-%ghost %{_libdir}/libgnomedb_goo-3.0.so.4
-%ghost %{_libdir}/libgnomedb_graph-3.0.so.4
+%attr(755,root,root) %ghost %{_libdir}/libgnomedb_graph-3.0.so.4
 %dir %{_libdir}/gnome-db-3.0
 %dir %{_libdir}/gnome-db-3.0/plugins
 %attr(755,root,root) %{_libdir}/gnome-db-3.0/plugins/libgnomedb_entry_builtin_plugins.so
@@ -198,10 +214,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libgnomedb_extra-3.0.so
 %attr(755,root,root) %{_libdir}/libgnomedb_goo-3.0.so
 %attr(755,root,root) %{_libdir}/libgnomedb_graph-3.0.so
-%{_libdir}/libgnomedb-3.0.la
-%{_libdir}/libgnomedb_extra-3.0.la
-%{_libdir}/libgnomedb_goo-3.0.la
-%{_libdir}/libgnomedb_graph-3.0.la
 %{_includedir}/libgnomedb-3.0
 %{_pkgconfigdir}/libgnomedb-3.0.pc
 %{_pkgconfigdir}/libgnomedb-extra-3.0.pc
@@ -227,11 +239,10 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/gnome-db-demo
 %{_desktopdir}/database-properties-3.0.desktop
 %{_pixmapsdir}/libgnomedb-3.0
-%{_pixmapsdir}/libgnomedb-3.0/gnome-db.png
 
 %files -n glade3-libgnomedb3
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/glade3/modules/libgladegnomedb.so
 %{_datadir}/glade3/catalogs/gnomedb.xml
 %{_datadir}/glade3/catalogs/gnomedb.xml.in
-%{_datadir}/glade3/pixmaps/*/*/*/*.png
+%{_datadir}/glade3/pixmaps/hicolor/16x16/actions/widget-gnomedb-gnome-db-*.png
